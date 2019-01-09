@@ -37,12 +37,12 @@ $(document).ready(function() {
         console.log(newDate);
         console.log(date);
 
-        if (objectPending[oggetto.date] == undefined)
+        if (objectPending[newDate] == undefined)
         {
-          objectPending[oggetto.date] = 0;
+          objectPending[newDate] = 0;
         }
 
-        objectPending[oggetto.date] += oggetto.amount;
+        objectPending[newDate] += oggetto.amount;
       }
 
 
