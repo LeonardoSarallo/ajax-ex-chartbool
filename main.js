@@ -32,7 +32,7 @@ $(document).ready(function() {
       for (var i = 0; i < data.length; i++) {
         var oggetto = data[i];
         var date = oggetto.date;
-        var pendingDate = moment([date]);
+        var pendingDate = moment(date, 'DD/MM/YYYY');
         var newDate = pendingDate.format('MMMM');
         console.log(newDate);
         console.log(date);
