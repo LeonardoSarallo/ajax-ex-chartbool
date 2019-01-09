@@ -1,24 +1,6 @@
 var url = 'http://157.230.17.132:4015/sales';
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
 
-    // The data for our dataset
-    data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-            label: "My First dataset",
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    },
-
-    // Configuration options go here
-    options: {}
-});
 
 $(document).ready(function() {
 
@@ -33,7 +15,7 @@ $(document).ready(function() {
         var oggetto = data[i];
         var date = oggetto.date;
         var pendingDate = moment(date, 'DD/MM/YYYY');
-        var newDate = pendingDate.format('MMMM');
+        var newDate = pendingDate.format('MM');
         console.log(newDate);
         console.log(date);
 
@@ -45,9 +27,36 @@ $(document).ready(function() {
         objectPending[newDate] += oggetto.amount;
       }
 
+      var arrayLabels = [];
+      var arrayData = [];
 
 
-       console.log(objectPending);
+      for (var chiave in objectPending) {
+          arrayLabels.sort().push(chiave);
+          arrayData.push(objectPending[chiave]);
+      }
+
+      console.log(arrayLabels);
+      console.log(arrayData);
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var chart = new Chart(ctx, {
+          // The type of chart we want to create
+          type: 'line',
+
+          // The data for our dataset
+          data: {
+              labels: arrayLabels,
+              datasets: [{
+                  label: "My First dataset",
+                  backgroundColor: 'rgb(255, 99, 132)',
+                  borderColor: 'rgb(255, 99, 132)',
+                  data: arrayData,
+              }]
+          },
+
+          // Configuration options go here
+          options: {}
+      });
     },
     error: function(err)
     {
