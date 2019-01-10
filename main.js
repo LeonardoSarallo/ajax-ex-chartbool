@@ -9,20 +9,29 @@ $(document).ready(function() {
     method: 'GET',
     success: function(data)
     {
-      var objectPending = {};
+      var objectPending = {
+          January: 0,
+          February: 0,
+          March: 0,
+          April: 0,
+          May: 0,
+          June: 0,
+          July: 0,
+          August: 0,
+          September: 0,
+          October: 0,
+          November: 0,
+          December: 0};
 
       for (var i = 0; i < data.length; i++) {
         var oggetto = data[i];
         var date = oggetto.date;
         var pendingDate = moment(date, 'DD/MM/YYYY');
-        var newDate = pendingDate.format('MM');
+        var newDate = pendingDate.format('MMMM');
         console.log(newDate);
         console.log(date);
 
-        if (objectPending[newDate] == undefined)
-        {
-          objectPending[newDate] = 0;
-        }
+
 
         objectPending[newDate] += oggetto.amount;
       }
@@ -32,8 +41,8 @@ $(document).ready(function() {
 
 
       for (var chiave in objectPending) {
-          arrayLabels.sort().push(chiave);
-          arrayData.push(objectPending[chiave]);
+        arrayLabels.push(chiave);
+        arrayData.push(objectPending[chiave]);
       }
 
       console.log(arrayLabels);
@@ -57,6 +66,7 @@ $(document).ready(function() {
           // Configuration options go here
           options: {}
       });
+
     },
     error: function(err)
     {
