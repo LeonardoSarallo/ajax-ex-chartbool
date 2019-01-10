@@ -1,13 +1,12 @@
 .container, .piecontainer {
   width: 50%;
   margin: 0 auto;
-}
-
-.container, .piecontainer {
-  margin-top: 100px;
   float: left;
 }
 
+.container {
+  margin-top: 50px;
+}
 select {
   font-size: 15px;
   margin: 0 20px;
@@ -18,6 +17,10 @@ select {
   color: white;
   background: red;
   margin-left: 15px;
+}
+#mybutton:hover {
+  background: white;
+  color: red;
 }
 
 input {

@@ -1,6 +1,8 @@
 var url = 'http://157.230.17.132:4015/sales';
 var monthSelect = $('.mymonthselect');
 var nameSelect = $('.mynameselect');
+var button = $('#mybutton');
+var text = $('#mytext');
 
 
 $(document).ready(function() {
@@ -20,6 +22,44 @@ $(document).ready(function() {
       alert('si è verificato un errore');
     }
   })
+
+
+  button.click(function () {
+
+    var input = parseInt(text.val());
+    console.log(input);
+
+    var selectMonthVal = monthSelect.val();
+
+    var selectNameVal = nameSelect.val();
+
+    console.log(selectNameVal);
+
+    console.log(selectMonthVal);
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: {
+        salesman: selectNameVal,
+        amount: input,
+        date: selectMonthVal
+      },
+      success: function (data)
+      {
+        line(data);
+        pie(data);
+      },
+      error: function ()
+      {
+        alert('si è verificato un errore');
+      }
+
+    })
+
+  });
+
+
 })
 
 function line(data)
@@ -47,7 +87,7 @@ function line(data)
     console.log(date);
 
 
-    objectPending[newDate] += oggetto.amount;
+    objectPending[newDate] += parseInt(oggetto.amount);
   }
 
   var arrayLabels = [];
@@ -75,7 +115,7 @@ function line(data)
           labels: arrayLabels,
           datasets: [{
               label: "My First dataset",
-              backgroundColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgb(66, 134, 244)',
               borderColor: 'rgb(255, 99, 132)',
               data: arrayData,
           }]
@@ -96,7 +136,7 @@ function pie(data)
   for (var i = 0; i < data.length; i++) {
       var oggetto = data[i];
       var salesMan = oggetto.salesman;
-      var amount = oggetto.amount;
+      var amount = parseInt(oggetto.amount);
 
       if (obj[salesMan] == undefined)
       {
@@ -127,9 +167,11 @@ function pie(data)
       type: 'pie',
       data: {
           datasets: [{
-              data: arrayAmounts
+              data: arrayAmounts,
+              backgroundColor: ['red','yellow','violet','blue']
           }],
           labels: arrayLabels
+
       }
   });
 }
