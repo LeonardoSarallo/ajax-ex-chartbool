@@ -4,5 +4,11 @@
 }
 
 .container, .piecontainer {
+  margin-top: 50px;
   float: left;
+}
+
+select {
+  font-size: 15px;
+  margin: 0 20px;
 }

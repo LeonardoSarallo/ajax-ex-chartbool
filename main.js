@@ -1,5 +1,6 @@
 var url = 'http://157.230.17.132:4015/sales';
-
+var monthSelect = $('.mymonthselect');
+var nameSelect = $('.mynameselect');
 
 
 $(document).ready(function() {
@@ -9,6 +10,7 @@ $(document).ready(function() {
     method: 'GET',
     success: function(data)
     {
+
       line(data);
       pie(data);
 
@@ -45,7 +47,6 @@ function line(data)
     console.log(date);
 
 
-
     objectPending[newDate] += oggetto.amount;
   }
 
@@ -56,9 +57,13 @@ function line(data)
   for (var chiave in objectPending) {
     arrayLabels.push(chiave);
     arrayData.push(objectPending[chiave]);
+    console.log(chiave);
+    monthSelect.append("<option>" + chiave + "</option>");
+
   }
 
-  console.log(arrayLabels);
+
+
   console.log(arrayData);
   var ctx = document.getElementById('line').getContext('2d');
   var chart = new Chart(ctx, {
@@ -106,11 +111,15 @@ function pie(data)
   var arrayAmounts = [];
 
   for (var key in obj) {
+
       var disc = obj[key] / total * 100;
       console.log(disc);
 
       arrayLabels.push(key);
       arrayAmounts.push(disc.toFixed(2));
+      nameSelect.append("<option>" + key + "</option>");
+
+
   }
 
 
