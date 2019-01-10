@@ -1,4 +1,8 @@
-.container {
-  width: 60%;
+.container, .piecontainer {
+  width: 50%;
   margin: 0 auto;
+}
+
+.container, .piecontainer {
+  float: left;
 }

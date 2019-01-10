@@ -9,63 +9,8 @@ $(document).ready(function() {
     method: 'GET',
     success: function(data)
     {
-      var objectPending = {
-          January: 0,
-          February: 0,
-          March: 0,
-          April: 0,
-          May: 0,
-          June: 0,
-          July: 0,
-          August: 0,
-          September: 0,
-          October: 0,
-          November: 0,
-          December: 0};
-
-      for (var i = 0; i < data.length; i++) {
-        var oggetto = data[i];
-        var date = oggetto.date;
-        var pendingDate = moment(date, 'DD/MM/YYYY');
-        var newDate = pendingDate.format('MMMM');
-        console.log(newDate);
-        console.log(date);
-
-
-
-        objectPending[newDate] += oggetto.amount;
-      }
-
-      var arrayLabels = [];
-      var arrayData = [];
-
-
-      for (var chiave in objectPending) {
-        arrayLabels.push(chiave);
-        arrayData.push(objectPending[chiave]);
-      }
-
-      console.log(arrayLabels);
-      console.log(arrayData);
-      var ctx = document.getElementById('myChart').getContext('2d');
-      var chart = new Chart(ctx, {
-          // The type of chart we want to create
-          type: 'line',
-
-          // The data for our dataset
-          data: {
-              labels: arrayLabels,
-              datasets: [{
-                  label: "My First dataset",
-                  backgroundColor: 'rgb(255, 99, 132)',
-                  borderColor: 'rgb(255, 99, 132)',
-                  data: arrayData,
-              }]
-          },
-
-          // Configuration options go here
-          options: {}
-      });
+      line(data);
+      pie(data);
 
     },
     error: function(err)
@@ -74,3 +19,108 @@ $(document).ready(function() {
     }
   })
 })
+
+function line(data)
+{
+  var objectPending = {
+      January: 0,
+      February: 0,
+      March: 0,
+      April: 0,
+      May: 0,
+      June: 0,
+      July: 0,
+      August: 0,
+      September: 0,
+      October: 0,
+      November: 0,
+      December: 0};
+
+  for (var i = 0; i < data.length; i++) {
+    var oggetto = data[i];
+    var date = oggetto.date;
+    var pendingDate = moment(date, 'DD/MM/YYYY');
+    var newDate = pendingDate.format('MMMM');
+    console.log(newDate);
+    console.log(date);
+
+
+
+    objectPending[newDate] += oggetto.amount;
+  }
+
+  var arrayLabels = [];
+  var arrayData = [];
+
+
+  for (var chiave in objectPending) {
+    arrayLabels.push(chiave);
+    arrayData.push(objectPending[chiave]);
+  }
+
+  console.log(arrayLabels);
+  console.log(arrayData);
+  var ctx = document.getElementById('line').getContext('2d');
+  var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'line',
+
+      // The data for our dataset
+      data: {
+          labels: arrayLabels,
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: arrayData,
+          }]
+      },
+
+      // Configuration options go here
+      options: {}
+  });
+}
+
+function pie(data)
+{
+
+
+  var obj = {};
+  var total = 0;
+
+  for (var i = 0; i < data.length; i++) {
+      var oggetto = data[i];
+      var salesMan = oggetto.salesman;
+      var amount = oggetto.amount;
+
+      if (obj[salesMan] == undefined)
+      {
+          obj[salesMan] = 0;
+      }
+
+      obj[salesMan] += amount;
+      total += amount;
+  }
+
+  var arrayLabels = [];
+  var arrayAmounts = [];
+
+  for (var key in obj) {
+      var disc = obj[key] / total * 100;
+      console.log(disc);
+
+      arrayLabels.push(key);
+      arrayAmounts.push(disc.toFixed(2));
+  }
+
+
+  var myPieChart = new Chart($('#pie'), {
+      type: 'pie',
+      data: {
+          datasets: [{
+              data: arrayAmounts
+          }],
+          labels: arrayLabels
+      }
+  });
+}
