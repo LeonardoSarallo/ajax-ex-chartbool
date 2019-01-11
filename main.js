@@ -7,21 +7,7 @@ var text = $('#mytext');
 
 $(document).ready(function() {
 
-  $.ajax({
-    url: url,
-    method: 'GET',
-    success: function(data)
-    {
-
-      line(data);
-      pie(data);
-
-    },
-    error: function(err)
-    {
-      alert('si è verificato un errore');
-    }
-  })
+  print();
 
 
   button.click(function () {
@@ -51,21 +37,7 @@ $(document).ready(function() {
       },
       success: function (data)
       {
-        $.ajax({
-          url: url,
-          method: 'GET',
-          success: function(data)
-          {
-
-            line(data);
-            pie(data);
-
-          },
-          error: function(err)
-          {
-            alert('si è verificato un errore');
-          }
-        })
+        print(data);
 
       },
       error: function ()
@@ -79,6 +51,8 @@ $(document).ready(function() {
 
 
 })
+
+// Grafico linea
 
 function line(data)
 {
@@ -143,6 +117,7 @@ function line(data)
       options: {}
   });
 }
+// Grafico torta
 
 function pie(data)
 {
@@ -192,4 +167,26 @@ function pie(data)
 
       }
   });
+}
+
+
+// Funzione per stampare e aggiornare
+
+function print(data)
+{
+  $.ajax({
+    url: url,
+    method: 'GET',
+    success: function(data)
+    {
+
+      line(data);
+      pie(data);
+
+    },
+    error: function(err)
+    {
+      alert('si è verificato un errore');
+    }
+  })
 }

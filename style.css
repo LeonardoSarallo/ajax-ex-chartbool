@@ -1,22 +1,20 @@
 .container, .piecontainer {
   width: 50%;
-  margin: 0 auto;
+  margin-top: 100px;
   float: left;
 }
 
-.container {
-  margin-top: 50px;
-}
+
 select {
   font-size: 15px;
-  margin: 0 20px;
+  margin: 0 30px;
 }
 
 #mybutton {
   font-size: 20px;
   color: white;
   background: red;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 #mybutton:hover {
   background: white;
@@ -26,4 +24,8 @@ select {
 input {
   padding: 10px;
   font-size: 20px;
+}
+
+select, #mybutton, input {
+  margin-top: 20px;
 }
