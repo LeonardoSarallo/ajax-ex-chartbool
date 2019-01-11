@@ -26,6 +26,7 @@ $(document).ready(function() {
 
   button.click(function () {
 
+
     var input = parseInt(text.val());
     console.log(input);
 
@@ -50,8 +51,22 @@ $(document).ready(function() {
       },
       success: function (data)
       {
-        lineUpdate(data);
-        pie(data);
+        $.ajax({
+          url: url,
+          method: 'GET',
+          success: function(data)
+          {
+
+            line(data);
+            pie(data);
+
+          },
+          error: function(err)
+          {
+            alert('si è verificato un errore');
+          }
+        })
+
       },
       error: function ()
       {
@@ -177,70 +192,4 @@ function pie(data)
 
       }
   });
-}
-
-function lineUpdate(data)
-{
-
-  var objectPending = {
-      January: 0,
-      February: 0,
-      March: 0,
-      April: 0,
-      May: 0,
-      June: 0,
-      July: 0,
-      August: 0,
-      September: 0,
-      October: 0,
-      November: 0,
-      December: 0};
-
-  for (var i = 0; i < data.length; i++) {
-    var oggetto = data[i];
-    var date = oggetto.date;
-    var pendingDate = moment(date, 'DD/MM/YYYY');
-    var newDate = pendingDate.format('MMMM');
-    console.log(newDate);
-    console.log(date);
-
-
-    objectPending[newDate] += parseInt(oggetto.amount);
-  }
-
-  var arrayLabels = [];
-  var arrayData = [];
-
-
-  for (var chiave in objectPending) {
-    arrayLabels.push(chiave);
-    arrayData.push(objectPending[chiave]);
-    console.log(chiave);
-    monthSelect.append("<option>" + chiave + "</option>");
-
-  }
-
-
-
-  console.log(arrayData);
-  var ctx = document.getElementById('line').getContext('2d');
-  var chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: 'line',
-
-      // The data for our dataset
-      data: {
-          labels: arrayLabels,
-          datasets: [{
-              label: "My First dataset",
-              backgroundColor: 'rgb(66, 134, 244)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: input,
-          }]
-      },
-
-      // Configuration options go here
-      options: {}
-  });
-
 }
